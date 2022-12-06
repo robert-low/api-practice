@@ -45,3 +45,21 @@ form.addEventListener("submit", (event) => {
 // 8. searchMovies function is executed with argument of what is typed in by the user.
 
 // POST request - used to submit data from a user to an API.
+
+const signUp = (event) => {
+  event.preventDefault();
+  const emailValue = document.getElementById("email").value;
+  const passwordValue = document.getElementById("password").value;
+  fetch("https://reqres.in/api/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: emailValue, password: passwordValue })
+  })
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data);
+    });
+};
+
+const emailForm = document.querySelector("#form");
+emailForm.addEventListener("submit", signUp);
