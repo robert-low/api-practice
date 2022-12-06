@@ -31,7 +31,7 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
   const input = event.currentTarget.querySelector(".form-control");
   unorderedMovieList.innerHTML = "";
-  searchMovies(input.value);
+  console.log(input.value);
 });
 
 // Getting the users input through a form.
@@ -43,3 +43,5 @@ form.addEventListener("submit", (event) => {
 // 6. ensure the results are cleared by setting inner html to null.
 // 7. call the searchmovies function with our query of the value assigned to input variable.
 // 8. searchMovies function is executed with argument of what is typed in by the user.
+
+// POST request - used to submit data from a user to an API.
