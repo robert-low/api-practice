@@ -1,4 +1,7 @@
 // GET REQUEST - used to pull information from an API.
+const fs = require('fs');
+
+const err = console.error("there's an error");
 
 const unorderedMovieList = document.querySelector("#results");
 const form = document.querySelector("#search-form");
@@ -7,15 +10,25 @@ const searchMovies = (query) => {
   fetch(`http://www.omdbapi.com/?s=${query}&apikey=48727053`)
     .then(response => response.json())
     .then((data) => {
+      console.log(data);
       data.Search.forEach((movieResult) => {
-        const movieListItem = `<li class="movie-title-poster">
-        <img src=${movieResult.Poster}>
-        <p>${movieResult.Title}</p>
-        </li>`;
-        unorderedMovieList.insertAdjacentHTML("beforeend", movieListItem);
+        const movieListItem = movieResult.Title;
+        fs.writeFile("./test.txt", movieListItem, (err));
+        // const movieListItem = `<li class="movie-title-poster">
+        // <img src=${movieResult.Poster}>
+        // <p>${movieResult.Title}</p>
+        // </li>`;
+        // unorderedMovieList.insertAdjacentHTML("beforeend", movieListItem);
       });
     });
 };
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const input = event.currentTarget.querySelector(".form-control");
+  unorderedMovieList.innerHTML = "";
+  searchMovies(input.value);
+});
 
 // 1. fetch the Base URL of the API we want info from.
 // 2. Parse this information as a JSON file.
@@ -26,13 +39,6 @@ const searchMovies = (query) => {
 // 7. movieListItem is the HTML string with one object of the array and it's keys Title, Poster -->
 // 8. the variable above selects the HTML element in index.HTML by its ID - results.
 // 9. it then inserts into it the variable defined above into the DOM, which produces HTML.
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const input = event.currentTarget.querySelector(".form-control");
-  unorderedMovieList.innerHTML = "";
-  console.log(input.value);
-});
 
 // Getting the users input through a form.
 
@@ -46,20 +52,20 @@ form.addEventListener("submit", (event) => {
 
 // POST request - used to submit data from a user to an API.
 
-const signUp = (event) => {
-  event.preventDefault();
-  const emailValue = document.getElementById("email").value;
-  const passwordValue = document.getElementById("password").value;
-  fetch("https://reqres.in/api/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: emailValue, password: passwordValue })
-  })
-    .then(response => response.json())
-    .then((data) => {
-      console.log(data);
-    });
-};
+// const signUp = (event) => {
+//   event.preventDefault();
+//   const emailValue = document.getElementById("email").value;
+//   const passwordValue = document.getElementById("password").value;
+//   fetch("https://reqres.in/api/register", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ email: emailValue, password: passwordValue })
+//   })
+//     .then(response => response.json())
+//     .then((data) => {
+//       console.log(data);
+//     });
+// };
 
-const emailForm = document.querySelector("#form");
-emailForm.addEventListener("submit", signUp);
+// const emailForm = document.querySelector("#form");
+// emailForm.addEventListener("submit", signUp);
